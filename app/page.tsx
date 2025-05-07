@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Navbar } from "@/components/navbar"
 import { ContactForm } from "@/components/contact-form"
-import { ProjectModal, type Project } from "@/components/project-modal"
 import { AutoScrollingSkills } from "@/components/auto-scrolling-skills"
 import { FadeIn, FadeInLeft, FadeInRight, StaggerContainer, StaggerItem } from "@/components/framer-animations"
 import { trackEvent } from "@/components/analytics"
@@ -30,110 +30,9 @@ import {
 } from "lucide-react"
 import { Trophy, Medal, Plus } from "@/components/icons"
 import { useTheme } from "next-themes"
-
-// Project data
-const projects: Project[] = [
-  {
-    id: "binabola",
-    title: "BinaBola",
-    description: "Platform supporting Indonesian youth football with training modules and tracking.",
-    longDescription:
-      "BinaBola is a comprehensive platform designed to support the improvement of Indonesian youth football. It provides licensed training modules, tracking capabilities, and integration with evaluation systems.",
-    image: "/project-images/binabola.png",
-    badges: ["Flutter", "Dart", "Firebase", "GPS Tracking", "REST API"],
-    award: "Best Entrepreneur Project",
-    features: [
-      "Licensed Training Module with video tutorials",
-      "Running Tracker with performance analytics",
-      "Integration with SSB evaluation reporting",
-      "Live Local Football Competition Updates",
-      "Player profile and progress tracking",
-    ],
-    demoUrl: "https://binabola.com",
-    githubUrl: "https://github.com/hafidzfadillah/binabola",
-  },
-  {
-    id: "fitlife",
-    title: "FitLife",
-    description: "Lifestyle app tracking diet, workouts, and nutrition with AI trainer-bot Pandan.",
-    longDescription:
-      "FitLife is a comprehensive health and fitness application that helps users track their diet, workout progress, and detect food nutrition. The app features an AI-powered virtual trainer named Pandan that provides personalized guidance.",
-    image: "/project-images/fitlife.png",
-    badges: ["Flutter", "Dart", "Firebase", "Machine Learning", "AI", "Computer Vision"],
-    award: "2nd Place IIT Competition",
-    features: [
-      "Personal information questionnaire for customized programs",
-      "AI-generated fitness and nutrition plans",
-      "Daily login reward system",
-      "Comprehensive tracking for food intake, hydration, exercise, and vitality",
-      "Food nutrition detection using computer vision",
-      "AI pose correction for proper exercise form",
-      "Interactive chatbot assistant",
-      "In-app reward system for AI features",
-    ],
-    demoUrl: "https://fitlife-app.com",
-    githubUrl: "https://hafidzfadillah/fitlife",
-  },
-  {
-    id: "kspay",
-    title: "KSPay Mobile",
-    description: "All-in-one payment solution for bills, top-ups, and travel services.",
-    longDescription:
-      "KSPay Mobile is an all-in-one solution for payments and financial transaction needs. Users can pay bills, top-up credit and data packages, and purchase travel services quickly and securely.",
-    image: "/project-images/kspay.png",
-    badges: ["Android Native", "Kotlin", "Java", "RESTful API", "Payment Gateway"],
-    features: [
-      "Topup services for mobile credit, e-money, and gaming vouchers",
-      "Payment Point Online Banking for utilities and services",
-      "Ticket booking for trains, flights, and shuttle services",
-      "Package delivery integration with JNE",
-      "Secure transaction processing",
-      "Transaction history and reporting",
-    ],
-    demoUrl: "https://kspay.com",
-    githubUrl: "https://github.com/hafidzfadillah/kspay",
-  },
-  {
-    id: "inginbelajar",
-    title: "InginBelajar",
-    description: "Video-based course app for culinary and marketing learning materials.",
-    longDescription:
-      "InginBelajar is an online video-based course application focusing on culinary and marketing learning materials. The platform offers a variety of courses with multi-resolution video support and membership options.",
-    image: "/project-images/inginbelajar.png",
-    badges: ["Flutter", "Dart", "Firebase", "Video Streaming", "Dynamic Links"],
-    features: [
-      "Online video-based courses with multi-resolution support",
-      "Dynamic home-page content controlled via dashboard",
-      "Membership subscription system",
-      "Course sharing via Firebase dynamic links",
-      "Offline viewing capabilities",
-      "Progress tracking for enrolled courses",
-    ],
-    demoUrl: "https://inginbelajar.com",
-    githubUrl: "https://github.com/hafidzfadillah/inginbelajar",
-  },
-  {
-    id: "ytanalysis",
-    title: "YT Sentiment Analysis",
-    description: "Platform analyzing sentiment of YouTube videos based on comments.",
-    longDescription:
-      "The YouTube Videos Sentiment Analysis platform analyzes the sentiment of YouTube videos based on user comments. It provides insights into audience reception and helps content creators understand viewer sentiment.",
-    image: "/project-images/ytanalysis.png",
-    badges: ["Python", "Machine Learning", "NLP", "YouTube API", "Data Analysis"],
-    features: [
-      "Comment extraction from YouTube videos",
-      "Sentiment analysis using natural language processing",
-      "Visual data representation and insights",
-      "Trend analysis over time",
-      "Keyword extraction and topic modeling",
-    ],
-    githubUrl: "https://github.com/hafidzfadillah/yt-sentiment",
-  },
-]
+import { projects } from "@/data/projects"
 
 export default function Home() {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
@@ -142,22 +41,11 @@ export default function Home() {
     setMounted(true)
   }, [])
 
-  const openProjectModal = (project: Project) => {
-    setSelectedProject(project)
-    setIsModalOpen(true)
-    // Track event when a project is viewed
-    trackEvent("view_project", "portfolio", project.title)
-  }
-
-  const closeProjectModal = () => {
-    setIsModalOpen(false)
-  }
-
   const handleDownloadResume = () => {
     // Create a link element
     const link = document.createElement("a")
-    link.href = "/resume.pdf"
-    link.download = "Hafidz_Fadillah_Resume.pdf"
+    link.href = "/resume.txt"
+    link.download = "Hafidz_Fadillah_Resume.txt"
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
@@ -180,14 +68,6 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <Navbar onDownloadResume={handleDownloadResume} />
-
-      {/* Project Modal */}
-      <ProjectModal
-        project={selectedProject}
-        isOpen={isModalOpen}
-        onClose={closeProjectModal}
-        onExternalLinkClick={handleExternalLinkClick}
-      />
 
       {/* Hero Section with Gradient */}
       <section
@@ -221,6 +101,11 @@ export default function Home() {
                 <Button variant="outline" className="rounded-full" onClick={handleDownloadResume}>
                   <Download className="mr-2 h-4 w-4" /> Download CV
                 </Button>
+                {mounted && (
+                  <Button variant="outline" size="icon" className="rounded-full" onClick={toggleTheme}>
+                    {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+                  </Button>
+                )}
               </div>
             </FadeInLeft>
             <FadeInRight className="w-full md:w-1/2 flex justify-center items-center">
@@ -384,7 +269,7 @@ export default function Home() {
                     </div>
                     <div className="flex items-center gap-2 text-zinc-600 dark:text-zinc-400">
                       <Calendar className="h-4 w-4" />
-                      <span>Sep 2021 - Jan 2024</span>
+                      <span>Sep 2021 - Oct 2024</span>
                     </div>
                   </div>
                   <p className="text-zinc-600 dark:text-zinc-400">
@@ -464,14 +349,16 @@ export default function Home() {
                         </Badge>
                       )}
                     </div>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="w-full justify-between group-hover:text-emerald-600 transition-colors"
-                      onClick={() => openProjectModal(project)}
-                    >
-                      View Details <ArrowRight className="h-4 w-4 ml-2" />
-                    </Button>
+                    <Link href={`/projects/${project.id}`} passHref>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="w-full justify-between group-hover:text-emerald-600 transition-colors"
+                        onClick={() => trackEvent("view_project_card", "portfolio", project.title)}
+                      >
+                        View Details <ArrowRight className="h-4 w-4 ml-2" />
+                      </Button>
+                    </Link>
                   </CardContent>
                 </Card>
               </StaggerItem>

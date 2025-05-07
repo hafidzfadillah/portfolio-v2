@@ -1,0 +1,71 @@
+Hafidz Fadillah
+Bandung, West Java, Indonesia • hafidzfadillah23@gmail.com • +6285720019793 • linkedin.com/in/hfidzfadillah
+github.com/hafidzfadillah  •  hafidzfadillah.my.id
+
+Dynamic mobile application developer with 3 years of experience in creating innovative and user-centric mobile solutions. Proficient in Java and
+Kotlin, with expertise in the Flutter/Dart framework for cross-platform development. Adept at collaborating with cross-functional teams to deliver
+high-quality applications that enhance user engagement and drive business growth.
+
+WORK EXPERIENCE
+Mobile Engineer (Intern)Feb 2025 - May 2025
+PT GITS IndonesiaBandung, West Java, Indonesia
+Collaborated with product managers and designers to translate requirements into technical specifications, ensuring timely and successful
+project deliveries.
+Actively engaged in sprint planning and retrospectives, helping the team achieve a consistent velocity and timely delivery of features.
+Contributed to the adoption of modern development tools, reducing the time required for new feature implementation by 20%.
+
+Mobile Development PathFeb 2024 - Jul 2024
+Bangkit Academy led by Google, Tokopedia, Gojek, & TravelokaBandung, West Java, Indonesia
+Achieved graduation with Distinction by attaining a score of 89.7, ranking in the top 10% of the learning path.
+Developed BinaBola as a Capstone Project, resulting in recognition as the top project among 30 entries in the Entrepreneur-track
+category.
+
+Basic Programming Lab AssistantSep 2023 - Jan 2024
+Institut Teknologi Nasional (ITENAS)Bandung, West Java, Indonesia
+Oversaw a class of 40 students by managing and collaborating with a team of two assistants, resulting in improved student engagement
+and satisfaction.
+Assisted lecturer in teaching basic programming using Python
+
+Mobile DeveloperSep 2021 - Jan 2024
+PT. Pineapple Technology IndonesiaBandung, West Java, Indonesia
+Maintain, improve, and integrate fresh ideas into existing apps
+Mainly involved in maintaining technological solutions related to Payment Point Online Banking (PPOB)
+Developed projects for internal needs and clients
+
+Android Developer InternMar 2021 - Aug 2021
+PT. Pineapple Technology IndonesiaBandung, West Java, Indonesia
+Acquired in-depth knowledge of the flow and structure of existing mobile applications
+Analyzed the codebase and architectural design of the apps, improving understanding of the development process
+Collaborated with senior developers to debug and troubleshoot technical issues
+
+Mobile Developer InternSep 2020 - Dec 2020
+PT. Neuronworks IndonesiaBandung, West Java, Indonesia
+Developed proficiency in Dart programming language and Flutter framework
+Gained experience in version control using GitLab
+Contributed to tasks including UI slicing and implementing minor features
+
+EDUCATION
+Bachelor's degree in InformaticsJan 2021 - Present
+Institut Teknologi Nasional (ITENAS)
+
+Computer Software EngineeringJan 2018 - Jan 2021
+SMK Negeri 4 Bandung
+
+SKILLS
+Technical Skill: Android Native (Kotlin, Java), Flutter/Dart, FlutterFlow, Laravel (PHP), MySQL, Firebase, Python
+
+AWARDS
+Graduated with Distinction by Bangkit AcademyJul 2024
+
+Best Entrepreneur-track Capstone Project by Bangkit AcademyJul 2024
+One of the 5 teams, out of 30 teams, selected for Incubation Program and receive fundings support
+Contributed as mobile developer in BinaBola project
+
+2nd Best Team in IIT Competition - Mobile App Category by Intermedia Universitas Amikom PurwokertoOct 2023
+Awarded for developing FitLife, an app that helps users to reach a better lifestyle
+Contributed as mobile developer
+
+CERTIFICATIONS
+Belajar Pengembangan Aplikasi Android Intermediate
+Belajar Dasar AI
+Belajar Penerapan Machine Learning untuk Android
