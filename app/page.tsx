@@ -44,8 +44,8 @@ export default function Home() {
   const handleDownloadResume = () => {
     // Create a link element
     const link = document.createElement("a")
-    link.href = "/resume.txt"
-    link.download = "Hafidz_Fadillah_Resume.txt"
+    link.href = "/cv.pdf"
+    link.download = "Hafidz_Fadillah_Resume.pdf"
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
