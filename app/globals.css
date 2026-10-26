@@ -2,78 +2,167 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 142.1 76.2% 36.3%;
-    --primary-foreground: 355.7 100% 97.3%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 142.1 76.2% 36.3%;
-    --radius: 0.75rem;
-  }
+/* Design tokens. One chromatic accent (soft green); --accent-ink is the AA-safe green for text/icons. */
+:root {
+  --canvas: #f5f5f5;
+  --surface: #ffffff;
+  --sunken: #ececec;
+  --ink: #0a0a0a;
+  --body: #333333;
+  --muted: #595959;
+  --hairline: #dedee0;
+  --accent: #8fd694;
+  --accent-ink: #2b6631;
+  --on-accent: #0a0a0a;
+  --capsule: #1f1f1f;
+  --on-capsule: #ffffff;
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.1);
+  --glow-opacity: 0.55;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  color-scheme: light;
+}
 
-  .dark {
-    --background: 20 14.3% 4.1%;
-    --foreground: 0 0% 95%;
-    --card: 24 9.8% 10%;
-    --card-foreground: 0 0% 95%;
-    --popover: 0 0% 9%;
-    --popover-foreground: 0 0% 95%;
-    --primary: 142.1 70.6% 45.3%;
-    --primary-foreground: 144.9 80.4% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 12 6.5% 15.1%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 85.7% 97.3%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 142.4 71.8% 29.2%;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --canvas: #0f100f;
+    --surface: #181918;
+    --sunken: #222322;
+    --ink: #f5f5f5;
+    --body: #d6d6d6;
+    --muted: #a3a3a3;
+    --hairline: #2c2d2c;
+    --accent-ink: #8fd694;
+    --capsule: #2a2b2a;
+    --shadow-card: 0 0 0 1px #2c2d2c;
+    --glow-opacity: 0.22;
+    color-scheme: dark;
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-canvas font-sans text-body antialiased;
+    font-weight: 450;
+    overflow-x: clip;
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent-ink);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 }
 
-/* Custom animations */
-@keyframes float {
-  0% {
-    transform: translateY(0px);
+@layer components {
+  /* Display type: condensed 900, tracking tightens as size grows. */
+  .display {
+    @apply font-display uppercase text-ink;
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
   }
-  50% {
-    transform: translateY(-10px);
+  .label {
+    @apply font-label text-[11px] font-medium uppercase tracking-[0.16em] text-muted;
   }
-  100% {
-    transform: translateY(0px);
+  .card {
+    @apply rounded-card bg-surface shadow-card;
+  }
+  .chip {
+    @apply inline-flex items-center rounded-full border border-hairline px-3 py-1 font-label text-[13px] font-medium text-body;
+  }
+  .pill {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-ink px-5 text-[15px] font-medium text-ink;
+    transition:
+      transform 160ms var(--ease-out),
+      background-color 160ms ease;
+  }
+  .pill:active {
+    transform: scale(0.97);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .pill:hover {
+      background-color: var(--sunken);
+    }
+  }
+  /* Use together with .pill: class="pill pill-accent". Only one filled button on the page. */
+  .pill.pill-accent {
+    border-color: transparent;
+    background-color: var(--accent);
+    color: var(--on-accent);
+  }
+  .status-dot {
+    @apply inline-block h-2 w-2 rounded-full bg-accent;
   }
 }
 
-.animate-float {
-  animation: float 3s ease-in-out infinite;
+/* Detail dialog (components/details-dialog.tsx). Enter/exit animate only opacity + transform. */
+.details-dialog {
+  margin: auto;
+  width: min(720px, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  padding: 0;
+  border: 0;
+  border-radius: 18px;
+  background: var(--surface);
+  color: var(--body);
+  box-shadow: var(--shadow-card);
+  overscroll-behavior: contain;
+  transition:
+    opacity 200ms var(--ease-out),
+    transform 200ms var(--ease-out),
+    overlay 200ms allow-discrete,
+    display 200ms allow-discrete;
+}
+.details-dialog:not([open]) {
+  opacity: 0;
+  transform: scale(0.97);
+}
+@starting-style {
+  .details-dialog[open] {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+.details-dialog::backdrop {
+  background: rgb(0 0 0 / 0.45);
+}
+body:has(.details-dialog[open]) {
+  overflow: hidden;
+}
+@media (prefers-reduced-motion: reduce) {
+  .details-dialog,
+  .details-dialog:not([open]) {
+    transform: none;
+  }
+}
+
+/* Scroll reveal: hidden only when JS can reveal it again (see components/reveal.tsx). */
+@media (scripting: enabled) {
+  [data-reveal] {
+    transition:
+      opacity 500ms var(--ease-out),
+      transform 700ms var(--ease-out);
+  }
+  [data-reveal]:not([data-shown]) {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal]:not([data-shown]) {
+    transform: none;
+  }
 }

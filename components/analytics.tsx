@@ -1,51 +1,16 @@
-"use client"
-
-import { usePathname, useSearchParams } from "next/navigation"
 import Script from "next/script"
-import { useEffect } from "react"
 
+const id = process.env.NEXT_PUBLIC_GA_ID
+
+// Google Analytics loads only when NEXT_PUBLIC_GA_ID is set (e.g. in Vercel env vars).
 export function Analytics() {
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
-
-  useEffect(() => {
-    if (pathname && typeof window !== "undefined" && window.gtag) {
-      const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : "")
-      window.gtag("config", "G-MEASUREMENT_ID", {
-        page_path: url,
-      })
-    }
-  }, [pathname, searchParams])
-
+  if (!id) return null
   return (
     <>
-      {/* Google tag (gtag.js) */}
-      <Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=G-MEASUREMENT_ID`} />
-      <Script
-        id="gtag-init"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-MEASUREMENT_ID', {
-              page_path: window.location.pathname,
-            });
-          `,
-        }}
-      />
+      <Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${id}`} />
+      <Script id="gtag-init" strategy="afterInteractive">
+        {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${id}');`}
+      </Script>
     </>
   )
-}
-
-// Add event tracking function
-export function trackEvent(action: string, category: string, label: string, value?: number) {
-  if (typeof window !== "undefined" && window.gtag) {
-    window.gtag("event", action, {
-      event_category: category,
-      event_label: label,
-      value: value,
-    })
-  }
 }

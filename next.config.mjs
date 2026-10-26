@@ -1,13 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  images: {
-    unoptimized: true,
+  async redirects() {
+    // Old multi-page project URLs now live as cards on the single page.
+    return [{ source: "/projects/:id", destination: "/#work", permanent: true }]
   },
 }
 

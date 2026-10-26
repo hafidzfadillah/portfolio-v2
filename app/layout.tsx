@@ -1,112 +1,57 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import type { Metadata, Viewport } from "next"
+import { Inter, Inter_Tight, Reddit_Sans_Condensed } from "next/font/google"
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
 import { Analytics } from "@/components/analytics"
-import Script from "next/script"
-import { Suspense } from "react"
+import { site } from "@/content/site"
 
-const inter = Inter({ subsets: ["latin"] })
+const display = Reddit_Sans_Condensed({ subsets: ["latin"], weight: "900", variable: "--font-display" })
+const sans = Inter({ subsets: ["latin"], variable: "--font-sans" })
+const label = Inter_Tight({ subsets: ["latin"], weight: "500", variable: "--font-label" })
+
+const title = `${site.name} — ${site.title}`
 
 export const metadata: Metadata = {
-  title: "Hafidz Fadillah | Mobile Developer",
-  description:
-    "Personal portfolio website of Hafidz Fadillah, a Mobile Developer with expertise in Android Native and Flutter development.",
-  keywords: [
-    "Hafidz Fadillah",
-    "Mobile Developer",
-    "Android Developer",
-    "Flutter Developer",
-    "Kotlin",
-    "Java",
-    "Dart",
-    "Portfolio",
-    "Mobile Apps",
-    "Indonesia",
-  ],
-  authors: [{ name: "Hafidz Fadillah", url: "https://github.com/hafidzfadillah" }],
-  creator: "Hafidz Fadillah",
-  publisher: "Hafidz Fadillah",
+  metadataBase: new URL(site.url),
+  title,
+  description: site.description,
+  authors: [{ name: site.name, url: site.url }],
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://hafidzfadillah.com",
-    title: "Hafidz Fadillah | Mobile Developer",
-    description: "Mobile Developer with expertise in Android Native and Flutter development",
-    siteName: "Hafidz Fadillah Portfolio",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Hafidz Fadillah - Mobile Developer",
-      },
-    ],
+    url: "/",
+    siteName: site.name,
+    title,
+    description: site.description,
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: title }],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Hafidz Fadillah | Mobile Developer",
-    description: "Mobile Developer with expertise in Android Native and Flutter development",
-    images: ["/og-image.png"],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-  verification: {
-    google: "google-site-verification-code", // Replace with your actual verification code
-  },
-  alternates: {
-    canonical: "https://hafidzfadillah.com",
-  },
-    generator: 'v0.dev'
+  twitter: { card: "summary_large_image", title, description: site.description, images: ["/og-image.png"] },
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f5f5f5" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f100f" },
+  ],
+}
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: site.name,
+  url: site.url,
+  jobTitle: site.title,
+  email: `mailto:${site.email}`,
+  sameAs: site.socials.map((s) => s.href),
+}
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
-        </ThemeProvider>
-        <Suspense fallback={null}>
-          <Analytics />
-        </Suspense>
-        <Script
-          id="schema-script"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              name: "Hafidz Fadillah",
-              url: "https://hafidzfadillah.com",
-              jobTitle: "Mobile Developer",
-              worksFor: {
-                "@type": "Organization",
-                name: "PT GITS Indonesia",
-              },
-              alumniOf: {
-                "@type": "Organization",
-                name: "Bangkit Academy",
-              },
-              sameAs: ["https://github.com/hafidzfadillah", "https://linkedin.com/in/hfidzfadillah"],
-              knowsAbout: ["Android Development", "Flutter", "Kotlin", "Java", "Dart", "Mobile App Development"],
-            }),
-          }}
-        />
+    <html lang="en" className={`${display.variable} ${sans.variable} ${label.variable}`}>
+      <body>
+        {children}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }} />
+        <Analytics />
       </body>
     </html>
   )
